@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gallery • Multimedia Sharing</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg1: #0b1220;
+        --bg2: #0b1b2b;
+        --card: rgba(255, 255, 255, 0.08);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text: #e5e7eb;
+        --muted: rgba(229, 231, 235, 0.72);
+        --shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+        --radius: 16px;
+      }
+
+      body {
+        min-height: 100vh;
+        color: var(--text);
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(99, 102, 241, 0.35), transparent 60%),
+          radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.25), transparent 55%),
+          linear-gradient(180deg, var(--bg1), var(--bg2));
+      }
+
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .topbar {
+        padding: 14px 16px;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .brand-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .brand-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #a5b4fc, #4f46e5);
+        box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.15);
+      }
+
+      .helper {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .form-control,
+      .form-select {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        color: var(--text) !important;
+        border-radius: 12px;
+      }
+
+      .btn-primary {
+        border: none;
+        border-radius: 12px;
+        padding: 8px 14px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #6366f1, #0ea5e9);
+        box-shadow: 0 12px 25px rgba(99, 102, 241, 0.25);
+      }
+
+      .btn-outline-secondary {
+        border-radius: 12px;
+        border-color: rgba(255, 255, 255, 0.25);
+        color: rgba(229, 231, 235, 0.9);
+      }
+
+      /* ===== MEDIA GRID ===== */
+      #ImageList.media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+        align-items: start;
+      }
+
+      .media-card {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 16px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .media-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32);
+      }
+
+      .media-thumb {
+        width: 100%;
+        height: 180px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .media-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .media-body {
+        padding: 12px 12px 14px;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .media-title {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 800;
+        font-size: 14px;
+        color: var(--text);
+        word-break: break-word;
+      }
+
+      .video-link {
+        display: inline-block;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(99, 102, 241, 0.18);
+        color: #c7d2fe;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 13px;
+        border: 1px solid rgba(99, 102, 241, 0.25);
+      }
+
+      /* =========================
+         HIGHLIGHTED CONTROLS BAR
+         ========================= */
+      .controls {
+        position: sticky;
+        top: 12px;
+        z-index: 20;
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        box-shadow:
+          0 16px 40px rgba(0, 0, 0, 0.35),
+          0 0 0 1px rgba(14, 165, 233, 0.15),
+          0 0 40px rgba(99, 102, 241, 0.18);
+      }
+
+      .controls-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .pill {
+        font-weight: 800;
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(99, 102, 241, 0.18);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        color: #c7d2fe;
+      }
+
+      .control-input {
+        border-radius: 14px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      }
+
+      .control-input:focus {
+        border-color: rgba(14, 165, 233, 0.6) !important;
+        box-shadow:
+          0 0 0 0.22rem rgba(14, 165, 233, 0.18),
+          0 0 30px rgba(99, 102, 241, 0.22);
+      }
+
+      .btn-glow {
+        box-shadow:
+          0 12px 28px rgba(99, 102, 241, 0.28),
+          0 0 0 1px rgba(99, 102, 241, 0.22);
+      }
+
+      @media (max-width: 576px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container py-3">
+      <div class="glass topbar mb-3">
+        <div>
+          <div class="brand-badge">
+            <span class="brand-dot"></span>
+            <span>EduVerse • Multimedia</span>
+          </div>
+          <div class="mt-2">
+            <div class="fw-bold">Gallery</div>
+            <div class="helper">
+              Logged in as <b><span id="loggedInUser"></span></b>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <a href="./dashboard.html" class="btn btn-primary btn-sm">Back</a>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+
+      <!-- ✅ Highlighted Controls (Search + Filter + Refresh) -->
+      <div class="controls glass p-3 mb-3">
+        <div class="controls-title mb-2">
+          <span class="pill">Gallery Controls</span>
+          <span class="helper">Search, filter and refresh media</span>
+        </div>
+
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-6">
+            <input
+              id="searchBox"
+              class="form-control control-input"
+              placeholder="🔎 Search by file name or user name..."
+            />
+          </div>
+
+          <div class="col-12 col-md-3">
+            <select id="typeFilter" class="form-select control-input">
+              <option value="all">📦 All</option>
+              <option value="image">🖼️ Images</option>
+              <option value="video">🎬 Videos</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-3 d-flex justify-content-md-end">
+            <button id="retImages" class="btn btn-primary w-100 w-md-auto btn-glow">
+              ⟳ Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <div id="resultCount" class="helper"></div>
+          <div id="hintText" class="helper">Tip: Refresh reloads data from Azure</div>
+        </div>
+      </div>
+
+      <div id="ImageList" class="media-grid">
+        <div class="helper">Loading...</div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./JS/app.js"></script>
+  </body>
+</html>

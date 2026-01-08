@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register • Multimedia Sharing</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg1: #0b1220;
+        --bg2: #0b1b2b;
+        --card: rgba(255, 255, 255, 0.08);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text: #e5e7eb;
+        --muted: rgba(229, 231, 235, 0.72);
+        --shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+        --radius: 16px;
+      }
+
+      body {
+        min-height: 100vh;
+        color: var(--text);
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(99, 102, 241, 0.35), transparent 60%),
+          radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.25), transparent 55%),
+          linear-gradient(180deg, var(--bg1), var(--bg2));
+      }
+
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .wrap {
+        min-height: calc(100vh - 40px);
+        display: grid;
+        place-items: center;
+        padding: 20px 0;
+      }
+
+      .brand-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .brand-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #a5b4fc, #4f46e5);
+        box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.15);
+      }
+
+      .form-control {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        color: var(--text) !important;
+        border-radius: 12px;
+      }
+
+      .btn-primary {
+        border: none;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #6366f1, #0ea5e9);
+        box-shadow: 0 12px 25px rgba(99, 102, 241, 0.25);
+      }
+
+      .btn-outline-secondary {
+        border-radius: 12px;
+        border-color: rgba(255, 255, 255, 0.25);
+        color: rgba(229, 231, 235, 0.9);
+      }
+
+      .helper { color: var(--muted); font-size: 13px; }
+    </style>
+  </head>
+
+  <body>
+    <div class="container py-3">
+      <div class="wrap">
+        <div class="w-100" style="max-width: 460px;">
+          <div class="text-center mb-3">
+            <div class="brand-badge mb-3">
+              <span class="brand-dot"></span>
+              <span>EduVerse • Multimedia</span>
+            </div>
+            <h2 class="fw-bold mb-1">Create account</h2>
+            <div class="helper">Register to login and upload media</div>
+          </div>
+
+          <div class="glass p-3">
+            <form id="registerForm" onsubmit="return false;">
+              <div class="mb-3">
+                <label class="form-label" for="regUserId">User ID</label>
+                <input id="regUserId" class="form-control" placeholder="e.g. 1" />
+                <div class="helper mt-1">Use a unique number/string.</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="regUserName">User Name</label>
+                <input id="regUserName" class="form-control" placeholder="e.g. Sujit" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="regPassword">Password</label>
+                <input id="regPassword" type="password" class="form-control" placeholder="min 4 chars" />
+                <div class="helper mt-1">Frontend demo only (stored locally).</div>
+              </div>
+
+              <button id="registerBtn" type="button" class="btn btn-primary w-100">
+                Register
+              </button>
+
+              <div id="registerStatus" class="small mt-2"></div>
+
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <a class="btn btn-outline-secondary btn-sm" href="./dashboard.html">Back to Login</a>
+                <button id="resetUsersBtn" type="button" class="btn btn-outline-secondary btn-sm">
+                  Reset Users
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./JS/app.js"></script>
+  </body>
+</html>
